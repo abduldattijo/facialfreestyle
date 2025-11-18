@@ -12,7 +12,7 @@ class RetinaFaceDetector {
         this.animationFrameId = null;
 
         // Detection parameters
-        this.confidenceThreshold = 0.80;
+        this.confidenceThreshold = 0.50;
         this.nmsThreshold = 0.40;
 
         // Performance tracking
@@ -328,7 +328,11 @@ class RetinaFaceDetector {
         }
 
         if (locTensor && confTensor) {
-            return this.decodeRetinaFace(locTensor, confTensor);
+            const faces = this.decodeRetinaFace(locTensor, confTensor);
+            if (faces.length === 0) {
+                console.log('[RetinaFace] No faces after decode. First conf:', confTensor.data ? Math.max(...confTensor.data) : 'n/a');
+            }
+            return faces;
         }
 
         // Fallback: attempt to interpret outputs as already-decoded boxes
