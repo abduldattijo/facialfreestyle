@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+.venv*/
+retinaenv/
+Pytorch_Retinaface/retinaenv/
+Pytorch_Retinaface/
+__pycache__/
+*.onnx

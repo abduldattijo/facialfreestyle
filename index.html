@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetinaFace Multi-Face Detection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RetinaFace Multi-Face Detection</h1>
+            <p class="subtitle">High-accuracy, client-side face detection powered by ONNX Runtime</p>
+        </header>
+
+        <div class="controls-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                    </svg>
+                    <p class="upload-text">Drop video file here or click to browse</p>
+                    <p class="upload-hint">Supports MP4, WebM, MOV formats</p>
+                </div>
+                <input type="file" id="videoInput" accept="video/*" hidden>
+            </div>
+
+            <div class="model-controls">
+                <button id="loadModelBtn" class="btn btn-primary">Load RetinaFace Model</button>
+                <div class="model-status" id="modelStatus">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Model not loaded</span>
+                </div>
+            </div>
+
+            <div class="detection-controls" id="detectionControls" style="display: none;">
+                <div class="control-group">
+                    <label for="confidenceSlider">Detection Confidence: <span id="confidenceValue">0.80</span></label>
+                    <input type="range" id="confidenceSlider" min="0.3" max="0.95" step="0.05" value="0.80">
+                </div>
+                <div class="control-group">
+                    <label for="nmsSlider">NMS Threshold: <span id="nmsValue">0.40</span></label>
+                    <input type="range" id="nmsSlider" min="0.2" max="0.6" step="0.05" value="0.40">
+                </div>
+            </div>
+        </div>
+
+        <div class="video-section" id="videoSection" style="display: none;">
+            <div class="video-container">
+                <video id="videoPlayer" controls></video>
+                <canvas id="overlayCanvas"></canvas>
+            </div>
+
+            <div class="video-controls">
+                <button id="playBtn" class="btn btn-secondary">Play</button>
+                <button id="pauseBtn" class="btn btn-secondary">Pause</button>
+                <button id="toggleDetectionBtn" class="btn btn-primary">Start Detection</button>
+                <button id="resetBtn" class="btn btn-secondary">Reset</button>
+            </div>
+
+            <div class="stats-panel" id="statsPanel">
+                <div class="stat-item">
+                    <span class="stat-label">Faces Detected:</span>
+                    <span class="stat-value" id="faceCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">FPS:</span>
+                    <span class="stat-value" id="fpsValue">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Inference Time:</span>
+                    <span class="stat-value" id="inferenceTime">0ms</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>About This Application</h3>
+            <ul>
+                <li>Uses RetinaFace model for state-of-the-art face detection accuracy</li>
+                <li>Processes videos entirely in your browser (no uploads)</li>
+                <li>Optimized for detecting multiple faces, including small and partially occluded faces</li>
+                <li>Powered by ONNX Runtime Web for high-performance inference</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="spinner"></div>
+        <p id="loadingText">Loading...</p>
+    </div>
+
+    <!-- ONNX Runtime Web -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/ort.min.js"></script>
+    <!-- Main Application -->
+    <script src="app.js"></script>
+</body>
+</html>
