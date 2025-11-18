@@ -20,9 +20,9 @@ class RetinaFaceDetector {
         this.fps = 0;
         this.inferenceTime = 0;
 
-        // Model input resolution (matches exported ONNX: 1x3x480x640)
+        // Model input resolution (RetinaFace export is square 640x640)
         this.inputWidth = 640;
-        this.inputHeight = 480;
+        this.inputHeight = 640;
         this.variances = [0.1, 0.2];
         this.priors = null;
         this.priorInputKey = '';
